@@ -34,13 +34,14 @@ public class Lab4P1_AndreaAntunez {
                     cadena = leer.nextLine();
                     System.out.println("Ingrese una palabra");
                     String palabra = leer.nextLine();
+                    System.out.println("Oracion resultante");
                     System.out.println(invertir(cadena,palabra));
                     System.out.println();
                     break;
                 case 3:
                     System.out.println("Ingrese una operacion matematica");
                     cadena = leer.nextLine();
-                    operaciones(cadena);
+                    System.out.println("Resultado: " + operaciones(cadena));
                     System.out.println();
                     break;
                 default:
@@ -77,35 +78,103 @@ public class Lab4P1_AndreaAntunez {
         }
     }
     
+    
     //Ejercicio 2
     public static String invertir(String oracion, String palabra){
         String oracion_final = "";
-        String temp = oracion;
+        int posicion1 = 0;
+        String temp = "";
+        char car_final = oracion.charAt(oracion.length()-1);
+        if (car_final != ' ' || car_final != ',' || car_final != '!' || car_final != '?' || car_final != '.'){
+            oracion += " ";
+        }
         for (int contador = 0; contador <= oracion.length(); contador++){
-            int posicion = temp.indexOf(palabra);
-            oracion_final += temp.substring(contador, posicion);
-            contador+= (posicion-contador);
-            temp = oracion.substring(posicion+palabra.length(),oracion.length());
-            for (int contador2 = palabra.length()-1; contador2 >= 0; contador2--){
-                char ultimo_char = palabra.charAt (contador2);
-                oracion_final += ultimo_char;
-                contador ++;
+            char car = oracion.charAt(contador);
+            if (car == ' ' || car == ',' || car == '!' || car == '?' || car == '.'){
+                int posicion2 = contador;
+                temp += oracion.substring(posicion1, posicion2);
+                if (temp.equalsIgnoreCase(palabra)){
+                    temp = "";
+                    for (int contador2 = palabra.length()-1; contador2 >= 0; contador2--){
+                        char ultimo_char = palabra.charAt (contador2);
+                        temp += ultimo_char;
+                    }
+                    oracion_final += temp + car;
+                }
+                else {
+                    oracion_final += temp + car;
+                }
+                posicion1 = posicion2 + 1;
+                temp = "";
             }
-            temp = oracion_final + temp;
-            
+            if (contador == oracion.length()-1){
+                break;
+            }
         }
         return oracion_final;
-        
-        /*Revertir
-        for (int contador = palabra.length()-1; contador >= 0; contador--){
-            char ultimo_char = palabra.charAt (contador);
-            System.out.print(ultimo_char);
-        }*/
     }
     
+    
+    //Ejercicio 3
     public static int operaciones(String operacion){
         int resultado = 1;
-        
+        for (int contador = 0; contador < operacion.length(); contador++){
+            char car = operacion.charAt(contador);
+            if (car == '/' || car == '*'){
+                String num1 = "" + operacion.charAt(contador-1);
+                String num2 = "" + operacion.charAt(contador+1);
+                int posicion1 = contador-1;
+                int posicion2 = contador+1;
+                if (num1.equals(" ")){
+                    num1 = "" + operacion.charAt(contador-2);
+                    posicion1 = contador-2;
+                }
+                if (num2.equals(" ")){
+                    num2 = "" + operacion.charAt(contador+2);
+                    posicion2 = contador+2;
+                }
+                int numero1 = Integer.parseInt(num1);
+                int numero2 = Integer.parseInt(num2);
+                if (car == '/'){
+                    resultado = numero1 / numero2;
+                }
+                else{
+                    resultado = numero1 * numero2;
+                }
+                String temp = "" + resultado;
+                String resolver = operacion.substring(posicion1, posicion2 + 1);
+                operacion = operacion.replace(resolver, temp);
+            }
+        }
+        for (int contador = 0; contador < operacion.length(); contador++){
+            char car = operacion.charAt(contador);
+            if (car == '+' || car == '-'){
+                String num1 = "" + operacion.charAt(contador-1);
+                String num2 = "" + operacion.charAt(contador+1);
+                int posicion1 = contador-1;
+                int posicion2 = contador+1;
+                if (num1.equals(" ")){
+                    num1 = "" + operacion.charAt(contador-2);
+                    posicion1 = contador-2;
+                }
+                if (num2.equals(" ")){
+                    num2 = "" + operacion.charAt(contador+2);
+                    posicion2 = contador+2;
+                }
+                int numero1 = Integer.parseInt(num1);
+                int numero2 = Integer.parseInt(num2);
+                if (car == '+'){
+                    resultado = numero1 + numero2;
+                }
+                else{
+                    resultado = numero1 - numero2;
+                }
+                String temp = "" + resultado;
+                String resolver = operacion.substring(posicion1, posicion2 + 1);
+                operacion = operacion.replace(resolver, temp);
+            }
+            resultado = Integer.parseInt(operacion);
+        }
         
         return resultado;    
     }
