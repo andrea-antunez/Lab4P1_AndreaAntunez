@@ -39,7 +39,7 @@ public class Lab4P1_AndreaAntunez {
                     System.out.println();
                     break;
                 case 3:
-                    System.out.println("Ingrese una operacion matematica");
+                    System.out.println("Ingrese una operacion matematica con los caracteres espaciado (Ejemplo: 2 + 2): ");
                     cadena = leer.nextLine();
                     System.out.println("Resultado: " + operaciones(cadena));
                     System.out.println();
@@ -172,11 +172,12 @@ public class Lab4P1_AndreaAntunez {
                 String temp = "" + resultado;
                 String resolver = operacion.substring(posicion1, posicion2 + 1);
                 operacion = operacion.replace(resolver, temp);
+                contador = 0;
             }
-            resultado = Integer.parseInt(operacion);
         }
+        resultado = Integer.parseInt(operacion);
         
-        return resultado;    
+        return resultado;
     }
     
 }
