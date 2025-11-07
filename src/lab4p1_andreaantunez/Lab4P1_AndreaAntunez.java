@@ -34,10 +34,13 @@ public class Lab4P1_AndreaAntunez {
                     cadena = leer.nextLine();
                     System.out.println("Ingrese una palabra");
                     String palabra = leer.nextLine();
-                    invertir(cadena,palabra);
+                    System.out.println(invertir(cadena,palabra));
                     System.out.println();
                     break;
                 case 3:
+                    System.out.println("Ingrese una operacion matematica");
+                    cadena = leer.nextLine();
+                    operaciones(cadena);
                     System.out.println();
                     break;
                 default:
@@ -74,11 +77,37 @@ public class Lab4P1_AndreaAntunez {
         }
     }
     
-    public static void invertir(String oracion, String palabra){
-        int posicion = oracion.indexOf(palabra);
+    //Ejercicio 2
+    public static String invertir(String oracion, String palabra){
+        String oracion_final = "";
+        String temp = oracion;
         for (int contador = 0; contador <= oracion.length(); contador++){
+            int posicion = temp.indexOf(palabra);
+            oracion_final += temp.substring(contador, posicion);
+            contador+= (posicion-contador);
+            temp = oracion.substring(posicion+palabra.length(),oracion.length());
+            for (int contador2 = palabra.length()-1; contador2 >= 0; contador2--){
+                char ultimo_char = palabra.charAt (contador2);
+                oracion_final += ultimo_char;
+                contador ++;
+            }
+            temp = oracion_final + temp;
             
         }
+        return oracion_final;
+        
+        /*Revertir
+        for (int contador = palabra.length()-1; contador >= 0; contador--){
+            char ultimo_char = palabra.charAt (contador);
+            System.out.print(ultimo_char);
+        }*/
+    }
+    
+    public static int operaciones(String operacion){
+        int resultado = 1;
+        
+        
+        return resultado;    
     }
     
 }
